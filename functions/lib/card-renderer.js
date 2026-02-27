@@ -88,9 +88,9 @@ export function renderSiteCards(sites, settings) {
  * @returns {string}
  */
 export function renderEmptyState(categoryCount, hideAdmin) {
-  const emptyStateText = categoryCount === 0 ? '欢迎使用 iori-nav' : '暂无书签';
+  const emptyStateText = '暂无书签';
   const emptyStateSub = categoryCount === 0
-    ? '项目初始化完成，请前往后台添加分类和书签。'
+    ? '请前往后台添加分类和书签。'
     : '该分类下还没有添加任何书签。';
 
   return `
@@ -101,13 +101,6 @@ export function renderEmptyState(categoryCount, hideAdmin) {
             </svg>
         </div>
         <h3 class="text-xl font-medium text-gray-600 dark:text-gray-300 mb-2">${emptyStateText}</h3>
-        <p class="text-gray-400 dark:text-gray-500 max-w-md mx-auto mb-8">${emptyStateSub}</p>
-        ${!hideAdmin ? `<a href="/admin" target="_blank" class="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-all shadow-lg shadow-primary-600/20 hover:shadow-primary-600/40 hover:-translate-y-0.5">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            前往管理后台
-        </a>` : ''}
+        <p class="text-gray-400 dark:text-gray-500 max-w-md mx-auto">${emptyStateSub}</p>
     </div>`;
 }
