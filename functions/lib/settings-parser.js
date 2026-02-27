@@ -19,7 +19,7 @@ const SETTINGS_SCHEMA = {
     home_hide_hitokoto: { default: false, type: 'bool' },
     home_hitokoto_size: { default: '', type: 'string' },
     home_hitokoto_color: { default: '', type: 'string' },
-    home_hide_github: { default: false, type: 'boolOrOne' },
+    home_hide_github: { default: true, type: 'boolOrOne' },
     home_hide_admin: { default: false, type: 'boolOrOne' },
     home_custom_font_url: { default: '', type: 'string' },
     home_title_font: { default: '', type: 'string' },

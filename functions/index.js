@@ -350,8 +350,12 @@ export async function onRequest(context) {
   let headInjections = '';
 
   // 注入隐藏图标的 CSS
-  if (S.home_hide_admin) {
-    headInjections += `<style>a[href^="/admin"] { display: none !important; }</style>`;
+  if (S.home_hide_github || S.home_hide_admin) {
+    let hideIconsCss = '<style>';
+    if (S.home_hide_github) hideIconsCss += 'a[title="GitHub"] { display: none !important; }';
+    if (S.home_hide_admin) hideIconsCss += 'a[href^="/admin"] { display: none !important; }';
+    hideIconsCss += '</style>';
+    headInjections += hideIconsCss;
   }
 
   // 背景层 HTML
