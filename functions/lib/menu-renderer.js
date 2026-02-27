@@ -1,0 +1,93 @@
+// functions/lib/menu-renderer.js
+// 渲染分类菜单 HTML（水平 + 垂直）
+
+import { escapeHTML } from './utils';
+
+/**
+ * 渲染水平导航菜单
+ * @param {Array} cats - 分类树
+ * @param {string} currentCatalogName - 当前选中的分类名
+ * @returns {string} HTML 字符串
+ */
+export function renderHorizontalMenu(cats, currentCatalogName) {
+    if (!cats || cats.length === 0) return '';
+    return _renderHorizontalItems(cats, currentCatalogName, 0);
+}
+
+function _renderHorizontalItems(cats, currentCatalogName, level) {
+    return cats.map(cat => {
+        const isActive = currentCatalogName === cat.catelog;
+        const hasChildren = cat.children && cat.children.length > 0;
+        const safeName = escapeHTML(cat.catelog);
+        const encodedName = encodeURIComponent(cat.catelog);
+        const linkUrl = `?catalog=${encodedName}`;
+
+        let html = '';
+        if (level === 0) {
+            const activeClass = isActive ? 'active' : 'inactive';
+            const navItemActiveClass = isActive ? 'nav-item-active' : '';
+            html += `<div class="menu-item-wrapper relative inline-block text-left">`;
+            html += `<a href="${linkUrl}" class="nav-btn ${activeClass} ${navItemActiveClass}" data-id="${cat.id}">
+                  ${safeName}
+                  ${hasChildren ? '<svg class="w-3 h-3 ml-1 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>' : ''}
+               </a>`;
+            if (hasChildren) {
+                html += `<div class="dropdown-menu">${_renderHorizontalItems(cat.children, currentCatalogName, level + 1)}</div>`;
+            }
+            html += `</div>`;
+        } else {
+            const activeClass = isActive ? 'active' : '';
+            const navItemActiveClass = isActive ? 'nav-item-active' : '';
+            html += `<div class="menu-item-wrapper relative block w-full">`;
+            html += `<a href="${linkUrl}" class="dropdown-item ${activeClass} ${navItemActiveClass}" data-id="${cat.id}">
+                  ${safeName}
+                  ${hasChildren ? '<svg class="dropdown-arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>' : ''}
+               </a>`;
+            if (hasChildren) {
+                html += `<div class="dropdown-menu">${_renderHorizontalItems(cat.children, currentCatalogName, level + 1)}</div>`;
+            }
+            html += `</div>`;
+        }
+        return html;
+    }).join('');
+}
+
+/**
+ * 渲染垂直侧边栏菜单
+ * @param {Array} cats - 分类树
+ * @param {string} currentCatalogName - 当前选中的分类名
+ * @param {boolean} isCustomWallpaper - 是否使用自定义壁纸
+ * @returns {string} HTML 字符串
+ */
+export function renderVerticalMenu(cats, currentCatalogName, isCustomWallpaper) {
+    return _renderVerticalItems(cats, currentCatalogName, isCustomWallpaper, 0);
+}
+
+function _renderVerticalItems(cats, currentCatalogName, isCustomWallpaper, level) {
+    return cats.map(cat => {
+        const safeName = escapeHTML(cat.catelog);
+        const encodedName = encodeURIComponent(cat.catelog);
+        const isActive = currentCatalogName === cat.catelog;
+
+        const baseClass = "flex items-center px-3 py-2 rounded-lg w-full transition-colors duration-200";
+        const activeClass = isActive
+            ? "bg-secondary-100 text-primary-700 dark:bg-gray-800 dark:text-primary-400"
+            : "hover:bg-gray-100 text-gray-700 dark:text-gray-300 dark:hover:bg-gray-800";
+        const defaultIconColor = isCustomWallpaper ? "text-gray-600" : "text-gray-400 dark:text-gray-500";
+        const iconClass = isActive ? "text-primary-600 dark:text-primary-400" : defaultIconColor;
+        const indent = level * 12;
+
+        let html = `
+      <a href="?catalog=${encodedName}" data-id="${cat.id}" class="${baseClass} ${activeClass}" style="padding-left: ${12 + indent}px">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 ${iconClass}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+          </svg>
+          ${safeName}
+      </a>`;
+
+        if (cat.children && cat.children.length > 0) {
+            html += _renderVerticalItems(cat.children, currentCatalogName, isCustomWallpaper, level + 1);
+        }
+        return html;
+    }).join('');
+}
