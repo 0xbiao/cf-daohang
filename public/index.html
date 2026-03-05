@@ -73,15 +73,6 @@
       <div>
         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">分类导航</h3>
         <div class="space-y-1">
-          <a href="?catalog=all"
-            class="flex items-center px-3 py-2 rounded-lg {{CATALOG_EXISTS}} w-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500" fill="none"
-              viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
-            <span class="text-gray-700 dark:text-gray-200">全部</span>
-          </a>
           {{CATALOG_LINKS}}
         </div>
       </div>
@@ -119,14 +110,30 @@
     </header>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 {{STATS_ROW_PY_CLASS}}">
-      <div class="flex items-center justify-between {{STATS_ROW_MB_CLASS}} {{STATS_ROW_HIDDEN}}">
-        <h2 class="text-xl font-semibold text-gray-800 {{STATS_VISIBLE}}" {{STATS_STYLE}} data-role="list-heading"
-          data-default="{{HEADING_DEFAULT}}" data-active="{{HEADING_ACTIVE}}">
+      <div class="flex items-center justify-between {{STATS_ROW_MB_CLASS}} {{STATS_ROW_HIDDEN}} gap-4">
+        <h2 class="text-xl font-semibold text-gray-800 {{STATS_VISIBLE}} whitespace-nowrap" {{STATS_STYLE}}
+          data-role="list-heading" data-default="{{HEADING_DEFAULT}}" data-active="{{HEADING_ACTIVE}}">
           {{HEADING_TEXT}}
         </h2>
-        <div id="hitokoto-parent" class="text-sm {{HITOKOTO_CLASS}} md:block {{HITOKOTO_VISIBLE}}" {{HITOKOTO_STYLE}}>
-          <div id="hitokoto"><a href="#" target="_blank" id="hitokoto_text" {{HITOKOTO_STYLE}}>{{HITOKOTO_CONTENT}}</a>
-          </div>
+
+        <!-- 桌面端本地搜索框 -->
+        <div class="hidden sm:flex items-center relative w-full max-w-xs group">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-3 text-gray-400 pointer-events-none"
+            style="top: 50%; transform: translateY(-50%);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type="text" placeholder="过滤书签..."
+            class="search-input-target w-full pl-9 pr-10 py-2 rounded-xl text-sm transition-all focus:ring-2 focus:ring-primary-500/50 shadow-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 outline-none text-gray-700 dark:text-gray-200 focus:border-primary-400"
+            autocomplete="off">
+          <button type="button" class="absolute right-1 p-1.5 text-gray-400 hover:text-primary-500 transition-colors"
+            style="top: 50%; transform: translateY(-50%);">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>

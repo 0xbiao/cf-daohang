@@ -200,14 +200,7 @@ export async function onRequest(context) {
     : 'bg-white/15 text-white placeholder-primary-200 focus:ring-white/30 focus:bg-white/20 border-none dark:bg-gray-800/50 dark:text-gray-200 dark:placeholder-gray-500';
   const searchIconClass = isCustomWallpaper ? 'text-gray-400 dark:text-gray-500' : 'text-primary-200 dark:text-gray-500';
 
-  // === 9. 生成菜单 HTML ===
-  const allLinkActive = !catalogExists;
-  const allLinkClass = allLinkActive ? 'active' : 'inactive';
-  const allLinkActiveMarker = allLinkActive ? 'nav-item-active' : '';
-  const horizontalAllLink = `
-    <div class="menu-item-wrapper relative inline-block text-left">
-      <a href="?catalog=all" class="nav-btn ${allLinkClass} ${allLinkActiveMarker}">全部</a>
-    </div>`;
+  const horizontalAllLink = '';
   const horizontalCatalogMarkup = horizontalAllLink + renderHorizontalMenu(rootCategories, currentCatalogName);
   const catalogLinkMarkup = renderVerticalMenu(rootCategories, currentCatalogName, isCustomWallpaper);
 
@@ -334,15 +327,7 @@ export async function onRequest(context) {
       <div class="hidden min-[550px]:block">${horizontalHeaderContent}</div>`;
   }
 
-  const localSearchHtml = `
-    <div class="hidden sm:flex items-center relative mr-2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-3 text-gray-400 pointer-events-none" style="top: 50%; transform: translateY(-50%);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-      <input type="text" placeholder="查找书签..." class="search-input-target w-48 md:w-56 pl-9 pr-10 py-2 rounded-xl text-sm transition-all focus:w-56 lg:focus:w-64 bg-white/60 dark:bg-gray-800/60 backdrop-blur outline-none focus:ring-2 focus:ring-primary-500/50 shadow-sm text-gray-700 dark:text-gray-200" autocomplete="off">
-      <button type="button" class="absolute right-1 p-1.5 text-gray-400 hover:text-primary-500 transition-colors" style="top: 50%; transform: translateY(-50%);">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-      </button>
-    </div>`;
-  const topRightActionsHtml = `<div class="fixed top-4 right-4 z-50 flex items-center gap-2">${localSearchHtml}${themeIconHtml}${adminIconHtml}</div>`;
+  const topRightActionsHtml = `<div class="fixed top-4 right-4 z-50 flex items-center gap-2">${themeIconHtml}${adminIconHtml}</div>`;
   const leftTopActionHtml = `
     <div class="fixed top-4 left-4 z-50 ${mobileToggleVisibilityClass}">
       <button id="sidebarToggle" class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:bg-gray-100 dark:hover:bg-gray-700">
