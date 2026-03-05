@@ -203,17 +203,21 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ========== 搜索功能 ==========
-  const searchInputs = document.querySelectorAll('.search-input-target');
+  const localSearchInputs = document.querySelectorAll('.search-input-target');
+  const webSearchInputs = document.querySelectorAll('.web-search-input');
 
   // Initialize Search Engine UI based on saved preference
   const engineOptions = document.querySelectorAll('.search-engine-option');
 
-  // 如果外部搜索被禁用（没有搜索引擎选项），强制使用本地搜索
-  let currentSearchEngine = 'local';
+  // 初始化外部搜索引擎，默认 google
+  let currentSearchEngine = 'google';
   if (engineOptions.length > 0) {
-    currentSearchEngine = localStorage.getItem('search_engine') || 'local';
+    currentSearchEngine = localStorage.getItem('search_engine');
+    if (!currentSearchEngine || currentSearchEngine === 'local') {
+      currentSearchEngine = 'google';
+    }
   } else {
-    // 清除之前保存的外部搜索引擎选择
+    // 清除之前保存的引擎选择
     localStorage.removeItem('search_engine');
   }
 
@@ -228,19 +232,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Update Placeholder
-    let placeholder = '搜索书签...';
+    let placeholder = 'Google 搜索...';
     switch (engine) {
       case 'google': placeholder = 'Google 搜索...'; break;
       case 'baidu': placeholder = '百度搜索...'; break;
       case 'bing': placeholder = 'Bing 搜索...'; break;
     }
 
-    searchInputs.forEach(input => {
+    webSearchInputs.forEach(input => {
       input.placeholder = placeholder;
-      // If switching back to local, trigger filter immediately if input has value
-      if (engine === 'local' && input.value.trim()) {
-        input.dispatchEvent(new Event('input'));
-      }
     });
   }
 
@@ -257,20 +257,16 @@ document.addEventListener('DOMContentLoaded', function () {
       updateSearchEngineUI(currentSearchEngine);
 
       // Focus input after switch
-      searchInputs.forEach(input => input.focus());
+      webSearchInputs.forEach(input => input.focus());
     });
   });
 
-  searchInputs.forEach(input => {
-    // Local Search Input Handler
+  // Local Search Input Handler (即时过滤本地书签)
+  localSearchInputs.forEach(input => {
     input.addEventListener('input', function () {
-      // If external engine is selected, do not filter local sites (optional, but better UX)
-      // But keeping it might be confusing. Let's filter only if local.
-      if (currentSearchEngine !== 'local') return;
-
       const keyword = this.value.toLowerCase().trim();
-      // Sync other inputs
-      searchInputs.forEach(otherInput => {
+      // Sync other local inputs
+      localSearchInputs.forEach(otherInput => {
         if (otherInput !== this) {
           otherInput.value = this.value;
         }
@@ -293,10 +289,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       updateHeading(keyword);
     });
+  });
 
-    // External Search Enter Handler
+  // External Web Search Enter Handler (回车跳出搜索结果页)
+  webSearchInputs.forEach(input => {
     input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && currentSearchEngine !== 'local') {
+      if (e.key === 'Enter') {
         e.preventDefault();
         const query = this.value.trim();
         if (query) {
