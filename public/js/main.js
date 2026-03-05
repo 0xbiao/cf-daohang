@@ -291,23 +291,34 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // External Web Search Enter Handler (回车跳出搜索结果页)
+  // External Web Search Enter/Click Handler (回车或点击按钮跳出搜索结果页)
+  function executeWebSearch(input) {
+    const query = input.value.trim();
+    if (query) {
+      let url = '';
+      switch (currentSearchEngine) {
+        case 'google': url = `https://www.google.com/search?q=${encodeURIComponent(query)}`; break;
+        case 'baidu': url = `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`; break;
+        case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
+      }
+      if (url) window.open(url, '_blank');
+    }
+  }
+
   webSearchInputs.forEach(input => {
+    // 回车事件
     input.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
         e.preventDefault();
-        const query = this.value.trim();
-        if (query) {
-          let url = '';
-          switch (currentSearchEngine) {
-            case 'google': url = `https://www.google.com/search?q=${encodeURIComponent(query)}`; break;
-            case 'baidu': url = `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`; break;
-            case 'bing': url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`; break;
-          }
-          if (url) window.open(url, '_blank');
-        }
+        executeWebSearch(this);
       }
     });
+
+    // 点击按钮事件
+    const btn = input.parentElement?.querySelector('.web-search-btn');
+    if (btn) {
+      btn.addEventListener('click', () => executeWebSearch(input));
+    }
   });
 
   function updateHeading(keyword, activeCatalog, count) {

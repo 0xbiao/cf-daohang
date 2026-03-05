@@ -247,12 +247,12 @@ export async function onRequest(context) {
   const statsRowHiddenClass = shouldRenderStatsRow ? '' : 'hidden';
 
   // === 13. 搜索引擎选项 ===
-  const searchEngineOptions = S.home_search_engine_enabled ? `
+  const searchEngineOptions = `
     <div class="flex justify-center items-center gap-3 mb-4 text-sm select-none search-engine-wrapper">
         <label class="search-engine-option active" data-engine="google"><span>Google</span></label>
         <label class="search-engine-option" data-engine="baidu"><span>Baidu</span></label>
         <label class="search-engine-option" data-engine="bing"><span>Bing</span></label>
-    </div>` : '';
+    </div>`;
 
   // === 14. Header HTML ===
   const horizontalTitleHtml = S.layout_hide_title ? '' : `<h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-3 ${titleColorClass}" ${titleStyle}>{{SITE_NAME}}</h1>`;
@@ -263,9 +263,12 @@ export async function onRequest(context) {
       <div class="mb-8">${horizontalTitleHtml}${horizontalSubtitleHtml}</div>
       <div class="relative max-w-xl mx-auto">
         ${searchEngineOptions}
-        <div class="relative">
-          <input type="text" name="search" placeholder="Google 搜索..." class="web-search-input w-full pl-12 pr-4 py-3.5 rounded-2xl transition-all shadow-lg outline-none focus:outline-none focus:ring-2 ${searchInputClass}" autocomplete="off">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute left-4 top-3.5 ${searchIconClass}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        <div class="relative flex items-center">
+          <input type="text" name="search" placeholder="Google 搜索..." class="web-search-input w-full pl-12 pr-16 py-3.5 rounded-2xl transition-all shadow-lg outline-none focus:outline-none focus:ring-2 ${searchInputClass}" autocomplete="off">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute left-4 top-1/2 -translate-y-1/2 ${searchIconClass}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          <button type="button" class="web-search-btn absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-primary-500 hover:bg-primary-600 text-white rounded-xl transition-colors shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          </button>
         </div>
       </div>
     </div>`;
@@ -275,9 +278,12 @@ export async function onRequest(context) {
       <div class="max-w-4xl mx-auto mb-8">${horizontalTitleHtml}${horizontalSubtitleHtml}</div>
       <div class="relative max-w-xl mx-auto mb-8">
         ${searchEngineOptions}
-        <div class="relative">
-          <input id="headerSearchInput" type="text" name="search" placeholder="Google 搜索..." class="web-search-input w-full pl-12 pr-4 py-3.5 rounded-2xl transition-all shadow-lg outline-none focus:outline-none focus:ring-2 ${searchInputClass}" autocomplete="off">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute left-4 top-3.5 ${searchIconClass}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        <div class="relative flex items-center">
+          <input id="headerSearchInput" type="text" name="search" placeholder="Google 搜索..." class="web-search-input w-full pl-12 pr-16 py-3.5 rounded-2xl transition-all shadow-lg outline-none focus:outline-none focus:ring-2 ${searchInputClass}" autocomplete="off">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute left-4 top-1/2 -translate-y-1/2 ${searchIconClass}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          <button type="button" class="web-search-btn absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-primary-500 hover:bg-primary-600 text-white rounded-xl transition-colors shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          </button>
         </div>
       </div>
       <div class="relative max-w-5xl mx-auto">
@@ -331,7 +337,7 @@ export async function onRequest(context) {
   const localSearchHtml = `
     <div class="relative hidden sm:block mr-2 group">
       <input type="text" placeholder="查找书签..." class="search-input-target w-40 md:w-48 pl-9 pr-3 py-2 rounded-xl text-sm transition-all focus:w-56 lg:focus:w-64 bg-white/60 dark:bg-gray-800/60 backdrop-blur outline-none focus:ring-2 focus:ring-primary-500/50 shadow-sm text-gray-700 dark:text-gray-200" autocomplete="off">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-3 top-2.5 text-gray-400 group-focus-within:text-primary-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary-500 transition-colors pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
     </div>`;
   const topRightActionsHtml = `<div class="fixed top-4 right-4 z-50 flex items-center gap-2">${localSearchHtml}${themeIconHtml}${adminIconHtml}</div>`;
   const leftTopActionHtml = `
