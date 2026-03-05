@@ -335,9 +335,12 @@ export async function onRequest(context) {
   }
 
   const localSearchHtml = `
-    <div class="relative hidden sm:block mr-2 group">
-      <input type="text" placeholder="查找书签..." class="search-input-target w-40 md:w-48 pl-9 pr-3 py-2 rounded-xl text-sm transition-all focus:w-56 lg:focus:w-64 bg-white/60 dark:bg-gray-800/60 backdrop-blur outline-none focus:ring-2 focus:ring-primary-500/50 shadow-sm text-gray-700 dark:text-gray-200" autocomplete="off">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-3 text-gray-400 group-focus-within:text-primary-500 transition-colors pointer-events-none" style="top: 50%; transform: translateY(-50%);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+    <div class="hidden sm:flex items-center relative mr-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-3 text-gray-400 pointer-events-none" style="top: 50%; transform: translateY(-50%);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+      <input type="text" placeholder="查找书签..." class="search-input-target w-48 md:w-56 pl-9 pr-10 py-2 rounded-xl text-sm transition-all focus:w-56 lg:focus:w-64 bg-white/60 dark:bg-gray-800/60 backdrop-blur outline-none focus:ring-2 focus:ring-primary-500/50 shadow-sm text-gray-700 dark:text-gray-200" autocomplete="off">
+      <button type="button" class="absolute right-1 p-1.5 text-gray-400 hover:text-primary-500 transition-colors" style="top: 50%; transform: translateY(-50%);">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+      </button>
     </div>`;
   const topRightActionsHtml = `<div class="fixed top-4 right-4 z-50 flex items-center gap-2">${localSearchHtml}${themeIconHtml}${adminIconHtml}</div>`;
   const leftTopActionHtml = `
